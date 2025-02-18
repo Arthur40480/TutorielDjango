@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from django.db.models import Sum
 from django.utils import timezone
 
 MAX_LENGTH = 20
@@ -18,6 +19,18 @@ class Question(models.Model):
                               text_excerpt(self.question_text,
                                            MAX_LENGTH))
 
+    @classmethod
+    def most_popular(cls):
+        return cls.objects.annotate(total_votes=Sum('choice__votes')) \
+            .order_by('-total_votes') \
+            .first()
+
+    @classmethod
+    def least_popular(cls):
+        return cls.objects.annotate(total_votes=Sum('choice__votes')) \
+            .order_by('total_votes') \
+            .first()
+
     def was_published_recently(self):
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
@@ -29,7 +42,7 @@ class Question(models.Model):
         total = sum(c.votes for c in choices)
         if total == 0:
             return [(c.choice_text, c.votes, 0) for c in choices]
-        return [(c.choice_text, c.votes, c.votes / total) for c in choices]
+        return [(c.choice_text, c.votes, (c.votes / total) * 100) for c in choices]
 
     def get_max_choice(self):
         choices = self.choice_set.all()

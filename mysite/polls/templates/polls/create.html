@@ -1,0 +1,30 @@
+<h1>Créer une nouvelle question</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>Question :</label>
+    <input type="text" name="question_text" required>
+    <br><br>
+
+    <label>Choix 1 :</label>
+    <input type="text" name="choice_1">
+    <br>
+
+    <label>Choix 2 :</label>
+    <input type="text" name="choice_2">
+    <br>
+
+    <label>Choix 3 :</label>
+    <input type="text" name="choice_3">
+    <br>
+
+    <label>Choix 4 :</label>
+    <input type="text" name="choice_4">
+    <br>
+
+    <label>Choix 5 :</label>
+    <input type="text" name="choice_5">
+    <br><br>
+
+    <button type="submit">Créer</button>
+</form>

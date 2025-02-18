@@ -1,0 +1,13 @@
+<h1>Résultats du sondage : {{ question.question_text }}</h1>
+
+{% if choices %}
+    <ul>
+    {% for choice, votes, percentage in choices %}
+        <li>
+            {{ choice }} : {{ votes }} votes ({{ percentage|floatformat:2 }}%)
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun vote n'a encore été enregistré.</p>
+{% endif %}
