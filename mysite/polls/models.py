@@ -19,6 +19,9 @@ class Question(models.Model):
                               text_excerpt(self.question_text,
                                            MAX_LENGTH))
 
+    def __repr__(self):
+        return "<Question: {}>".format(self.question_text)
+    
     @classmethod
     def most_popular(cls):
         return cls.objects.annotate(total_votes=Sum('choice__votes')) \
