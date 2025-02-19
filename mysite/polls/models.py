@@ -21,7 +21,7 @@ class Question(models.Model):
 
     def __repr__(self):
         return "<Question: {}>".format(self.question_text)
-    
+
     @classmethod
     def most_popular(cls):
         return cls.objects.annotate(total_votes=Sum('choice__votes')) \
