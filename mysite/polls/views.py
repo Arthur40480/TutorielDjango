@@ -1,17 +1,18 @@
 from django.db.models import Sum, Max
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
+from .forms import QuestionForm
 from .models import Choice, Question
 
 
 def statistics(request):
     total_questions = Question.objects.count()
     total_choices = Choice.objects.count()
-    total_votes = Choice.objects.aggregate(Sum("votes"))["votes_sum"] or 0
+    total_votes = Choice.objects.aggregate(Sum("votes"))["votes__sum"] or 0
     if total_votes > 0:
         average_votes = (total_votes / total_questions)
     else:
@@ -106,13 +107,17 @@ def vote(request, question_id):
 
 
 def create_question(request):
-    question_text = request.POST.get("question_text")
+    form = QuestionForm(request.POST)
+    if form.is_valid():  # Si le formulaire est valide
+        question = form.save(commit=False)  # Crée une question mais sans la sauvegarder dans la base
+        question.pub_date = timezone.now()  # Ajoute la date de publication
+        question.save()  # Sauvegarde la question dans la base de données
 
-    if not question_text:
-        return render(request, "polls/create.html", )
-    new_question = Question.objects.create(question_text=question_text, pub_date=timezone.now())
-    for i in range(1, 6):
-        choice_text = request.POST.get(f"choice_{i}")
-        if choice_text:
-            Choice.objects.create(question=new_question, choice_text=choice_text)
-    return HttpResponseRedirect(reverse("polls:index"))
+        for i in range(1, 6):
+            choice_text = form.cleaned_data.get(f"choice{i}")
+            if choice_text:
+                Choice.objects.create(question=question, choice_text=choice_text)
+
+        return redirect('polls:index')
+
+    return render(request, 'polls/create.html', {'form': form})

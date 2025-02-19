@@ -1,30 +1,37 @@
-<h1>Créer une nouvelle question</h1>
-
-<form method="POST">
+<form method="post">
     {% csrf_token %}
-    <label>Question :</label>
-    <input type="text" name="question_text" required>
-    <br><br>
 
-    <label>Choix 1 :</label>
-    <input type="text" name="choice_1">
-    <br>
+    <div>
+        {{ form.question_text.label_tag }}
+        {{ form.question_text }}
+    </div>
 
-    <label>Choix 2 :</label>
-    <input type="text" name="choice_2">
-    <br>
+    <div>
+        {{ form.choice1.label_tag }}
+        {{ form.choice1 }}
+    </div>
 
-    <label>Choix 3 :</label>
-    <input type="text" name="choice_3">
-    <br>
+    <div>
+        {{ form.choice2.label_tag }}
+        {{ form.choice2 }}
+    </div>
 
-    <label>Choix 4 :</label>
-    <input type="text" name="choice_4">
-    <br>
+    <div>
+        {{ form.choice3.label_tag }}
+        {{ form.choice3 }}
+    </div>
 
-    <label>Choix 5 :</label>
-    <input type="text" name="choice_5">
-    <br><br>
+    <div>
+        {{ form.choice4.label_tag }}
+        {{ form.choice4 }}
+    </div>
 
-    <button type="submit">Créer</button>
+    <div>
+        {{ form.choice5.label_tag }}
+        {{ form.choice5 }}
+    </div>
+
+    <button type="submit">Créer la question</button>
 </form>
+
+
