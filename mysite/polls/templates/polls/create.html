@@ -1,37 +1,43 @@
-<form method="post">
-    {% csrf_token %}
+{% extends "base.html" %}
 
-    <div>
-        {{ form.question_text.label_tag }}
-        {{ form.question_text }}
-    </div>
+{% block title %}Création d'un sondage{% endblock %}
 
-    <div>
-        {{ form.choice1.label_tag }}
-        {{ form.choice1 }}
-    </div>
+{% block main %}
+    <form method="post">
+        {% csrf_token %}
 
-    <div>
-        {{ form.choice2.label_tag }}
-        {{ form.choice2 }}
-    </div>
+        <div>
+            {{ form.question_text.label_tag }}
+            {{ form.question_text }}
+        </div>
 
-    <div>
-        {{ form.choice3.label_tag }}
-        {{ form.choice3 }}
-    </div>
+        <div>
+            {{ form.choice1.label_tag }}
+            {{ form.choice1 }}
+        </div>
 
-    <div>
-        {{ form.choice4.label_tag }}
-        {{ form.choice4 }}
-    </div>
+        <div>
+            {{ form.choice2.label_tag }}
+            {{ form.choice2 }}
+        </div>
 
-    <div>
-        {{ form.choice5.label_tag }}
-        {{ form.choice5 }}
-    </div>
+        <div>
+            {{ form.choice3.label_tag }}
+            {{ form.choice3 }}
+        </div>
 
-    <button type="submit">Créer la question</button>
-</form>
+        <div>
+            {{ form.choice4.label_tag }}
+            {{ form.choice4 }}
+        </div>
+
+        <div>
+            {{ form.choice5.label_tag }}
+            {{ form.choice5 }}
+        </div>
+
+        <button type="submit">Créer la question</button>
+    </form>
+{% endblock %}
 
 

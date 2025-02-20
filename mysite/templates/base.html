@@ -9,10 +9,16 @@
     <title>{% block title %}TITRE{% endblock %}</title>
 </head>
 <body>
+    <nav>
+
+    </nav>
     <header>
-        {% block header %}
-        <img src="{% static '../static/polls/images/background.png' %}" alt="Background Image">
-        {% endblock %}
+        {% if user.is_authenticated %}
+            <p>Bienvenue, {{ user.username }} !</p>
+            <a href="{% url 'polls:logout' %}">Se déconnecter</a>
+        {% else %}
+            <a href="{% url 'polls:login' %}">Se connecter</a>
+        {% endif %}
     </header>
     <main>
         {% block main %}

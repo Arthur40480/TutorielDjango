@@ -1,16 +1,18 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+{% extends "base.html" %}
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }} - {{question.pub_date}}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
-{% if user.is_authenticated %}
-    <p><a href="{% url 'polls:create' %}"> Créer une nouvelle question ?</a></p>
-{% else %}
-{% endif %}
+{% block title %}Accueil{% endblock %}
+{% block main %}
+    {% if latest_question_list %}
+        <ul>
+        {% for question in latest_question_list %}
+            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }} - {{question.pub_date}}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <p><a href="{% url 'polls:create' %}"> Créer une nouvelle question ?</a></p>
+    {% else %}
+    {% endif %}
+{% endblock %}
