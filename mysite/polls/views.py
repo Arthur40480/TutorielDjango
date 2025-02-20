@@ -1,9 +1,11 @@
+from django.contrib.auth import login
 from django.db.models import Sum, Max
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
+from django.contrib.auth.forms import AuthenticationForm
 
 from .forms import QuestionForm
 from .models import Choice, Question
@@ -108,10 +110,10 @@ def vote(request, question_id):
 
 def create_question(request):
     form = QuestionForm(request.POST)
-    if form.is_valid():  # Si le formulaire est valide
-        question = form.save(commit=False)  # Crée une question mais sans la sauvegarder dans la base
-        question.pub_date = timezone.now()  # Ajoute la date de publication
-        question.save()  # Sauvegarde la question dans la base de données
+    if form.is_valid():
+        question = form.save(commit=False)
+        question.pub_date = timezone.now()
+        question.save()
 
         for i in range(1, 6):
             choice_text = form.cleaned_data.get(f"choice{i}")
@@ -121,3 +123,17 @@ def create_question(request):
         return redirect('polls:index')
 
     return render(request, 'polls/create.html', {'form': form})
+
+
+def login_view(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect("polls:index")
+    else:
+        form = AuthenticationForm()
+
+    return render(request, "polls/login.html", {"form": form})
+

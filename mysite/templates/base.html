@@ -1,0 +1,23 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TITRE{% endblock %}</title>
+</head>
+<body>
+    <header>
+        {% block header %}
+        <img src="{% static '../static/polls/images/background.png' %}" alt="Background Image">
+        {% endblock %}
+    </header>
+    <main>
+        {% block main %}
+        MAIN
+        {% endblock %}
+    </main>
+</body>
+</html>

@@ -1,14 +1,19 @@
-<h1> Statistiques </h1>
-<p>Total de sondages enregistrés : {{ total_questions }}</p>
-<p>Total de choix possibles : {{ total_choices }}</p>
-<p>Total de votes : {{ total_votes }}</p>
-<p>Moyenne des votes par sondage : {{ average_votes }}</p>
+{% extends "base.html" %}
 
-<h2>Question la plus populaire :</h2>
-<p>{{most_popular_question}}</p>
+{% block title %}Statistiques{% endblock %}
 
-<h2>Question la moins populaire :</h2>
-<p> {{least_popular_question}}</p>
+{% block main %}
+    <p>Total de sondages enregistrés : {{ total_questions }}</p>
+    <p>Total de choix possibles : {{ total_choices }}</p>
+    <p>Total de votes : {{ total_votes }}</p>
+    <p>Moyenne des votes par sondage : {{ average_votes }}</p>
 
-<h2>Dernière question enregistrée</h2>
-<p>{{ last_question.question_text }} - Publiée le {{ last_question.pub_date }}</p>
+    <h2>Question la plus populaire :</h2>
+    <p>{{most_popular_question}}</p>
+
+    <h2>Question la moins populaire :</h2>
+    <p> {{least_popular_question}}</p>
+
+    <h2>Dernière question enregistrée</h2>
+    <p>{{ last_question.question_text }} - Publiée le {{ last_question.pub_date }}</p>
+{% endblock %}
