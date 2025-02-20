@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 from .forms import QuestionForm
 from .models import Choice, Question
@@ -108,6 +109,7 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
 
 
+@login_required(login_url="/polls/login/")
 def create_question(request):
     form = QuestionForm(request.POST)
     if form.is_valid():

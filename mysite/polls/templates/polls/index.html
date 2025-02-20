@@ -10,4 +10,7 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
-<p><a href="{% url 'polls:create' %}"> Créer une nouvelle question ?</a></p>
+{% if user.is_authenticated %}
+    <p><a href="{% url 'polls:create' %}"> Créer une nouvelle question ?</a></p>
+{% else %}
+{% endif %}
